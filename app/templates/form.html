@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>{% if quote %}Edit Quote{% else %}Add New Quote{% endif %}</h2>
+
+<form method="POST">
+    {% csrf_token %}
+    <div>
+        <label for="text">Quote Text:</label>
+        <textarea name="text" id="text" rows="4" required>{% if quote %}{{ quote.text }}{% endif %}</textarea>
+    </div>
+
+    <div>
+        <label for="author">Author:</label>
+        <input type="text" name="author" id="author"
+            value="{% if quote %}{{ quote.author }}{% else %}{{ request.user.username }}{% endif %}" readonly>
+    </div>
+
+    <div>
+        <label for="source">Source (optional):</label>
+        <input type="text" name="source" id="source" value="{% if quote %}{{ quote.source }}{% endif %}">
+    </div>
+
+    <div class="checkbox-group">
+        <input type="checkbox" name="is_featured" id="is_featured" {% if quote.is_featured %}checked{% endif %}>
+        <label for="is_featured">Set as featured quote</label>
+    </div>
+
+    <button type="submit">{% if quote %}Update{% else %}Create{% endif %} Quote</button>
+    <a href="{% url 'index' %}" class="button secondary-button">Cancel</a>
+</form>
+{% endblock %}

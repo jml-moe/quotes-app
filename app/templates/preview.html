@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="quote-card {% if quote.is_featured %}featured{% endif %}" style="padding: 25px;">
+    <div class="quote-text" style="font-size: 1.5em;">{{ quote.text }}</div>
+    <div class="quote-author" style="font-size: 1.2em;">- {{ quote.author }}</div>
+
+    {% if quote.source %}
+    <div class="quote-source" style="margin-top: 15px;">Source: {{ quote.source }}</div>
+    {% endif %}
+
+    <div style="margin-top: 20px;">
+        <p>Added on: {{ quote.created_date|date:"F j, Y" }}</p>
+        <p>Status: {% if quote.is_featured %}<span style="color: #DAA520;">Featured</span>{% else %}Regular{% endif %}
+        </p>
+    </div>
+
+    <div>
+        <a href="{% url 'index' %}" class="button">Back to All Quotes</a>
+        <a href="{% url 'quote_update' id=quote.id %}" class="button">Edit Quote</a>
+        <form method="POST" action="{% url 'quote_delete' id=quote.id %}" style="display: inline;"">
+            {% csrf_token %}
+            <button type=" submit" class="delete-button"
+            onclick="return confirm('Are you sure you want to delete this quote?')">Delete</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

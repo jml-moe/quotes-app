@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div style="text-align: center; margin: 50px auto; max-width: 600px;">
+    <h2>Quote of the Day</h2>
+    <p>{{ today|date:"l, F j, Y" }}</p>
+
+    {% if quote %}
+    <div class="quote-card {% if quote.is_featured %}featured{% endif %}"
+        style="padding: 30px; margin-top: 30px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+        <div class="quote-text" style="font-size: 1.8em; margin-bottom: 20px;">{{ quote.text }}</div>
+        <div class="quote-author" style="font-size: 1.4em;">- {{ quote.author }}</div>
+
+        {% if quote.source %}
+        <div class="quote-source" style="margin-top: 15px; font-style: italic;">Source: {{ quote.source }}</div>
+        {% endif %}
+    </div>
+
+    <div style="margin-top: 30px;">
+        <a href="{% url 'index' %}" class="button">Browse All Quotes</a>
+    </div>
+    {% else %}
+    <div style="margin-top: 50px;">
+        <p>No quotes available yet.</p>
+        <a href="{% url 'quote_create' %}" class="button">Add Your First Quote</a>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

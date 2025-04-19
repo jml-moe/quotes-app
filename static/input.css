@@ -1,0 +1,21 @@
+@import "tailwindcss";
+@plugin "daisyui";
+
+/* Custom styles */
+.demo-credentials {
+  margin-top: 1rem;
+  padding: 1rem;
+  border: 1px dashed;
+  border-radius: 0.5rem;
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.demo-title {
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  color: #555;
+}
+
+.demo-credentials p {
+  margin: 0.25rem 0;
+}

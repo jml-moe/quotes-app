@@ -49,11 +49,19 @@ class QuoteCreateView(LoginRequiredMixin, View):
 class QuoteUpdateView(LoginRequiredMixin, View):
     def get(self, request, id):
         quote = get_object_or_404(Quote, id=id)
+        # Memeriksa apakah pengguna yang sedang login adalah pemilik quote
+        if quote.user != request.user:
+            messages.error(request, "Anda tidak memiliki izin untuk mengedit quote ini.")
+            return redirect("index")
         context = {"quote": quote}
         return render(request, "form.html", context)
 
     def post(self, request, id):
         quote = get_object_or_404(Quote, id=id)
+        # Memeriksa apakah pengguna yang sedang login adalah pemilik quote
+        if quote.user != request.user:
+            messages.error(request, "Anda tidak memiliki izin untuk mengedit quote ini.")
+            return redirect("index")
         quote.text = request.POST.get("text")
         quote.author = request.POST.get("author")
         quote.source = request.POST.get("source", "")
@@ -65,6 +73,10 @@ class QuoteUpdateView(LoginRequiredMixin, View):
 class QuoteDeleteView(LoginRequiredMixin, View):
     def post(self, request, id):
         quote = get_object_or_404(Quote, id=id)
+        # Memeriksa apakah pengguna yang sedang login adalah pemilik quote
+        if quote.user != request.user:
+            messages.error(request, "Anda tidak memiliki izin untuk menghapus quote ini.")
+            return redirect("index")
         quote.delete()
         return redirect("index")
 

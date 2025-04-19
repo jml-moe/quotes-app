@@ -15,12 +15,14 @@
         {% endif %}
         <div style="margin-top: 10px;">
             <a href="{% url 'quote' id=quote.id %}" class="button">View</a>
+            {% if quote.user == request.user %}
             <a href="{% url 'quote_update' id=quote.id %}" class="button">Edit</a>
             <form method="POST" action="{% url 'quote_delete' id=quote.id %}" style="display: inline;">
                 {% csrf_token %}
                 <button type="submit" class="delete-button"
                     onclick="return confirm('Are you sure you want to delete this quote?')">Delete</button>
             </form>
+            {% endif %}
         </div>
     </div>
     {% endfor %}
